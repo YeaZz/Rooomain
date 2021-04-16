@@ -1,0 +1,18 @@
+name: Rooomain
+version: 1.0.0
+main: com.gmail.perhapsitisyeazz.rooomain.Rooomain
+api-version: '1.15'
+description: 'RRRRRRRRROOOOOOOOOOOOOMMMMMMMMMMMMAAAAAAAAAAIIIIIIIIIIIINNNNNN'
+author: 'YeaZz_'
+commands:
+  deathcount:
+    description: Oui.
+    usage: /deathcount [show|reset] <player>
+  team:
+    description: Créé ta team avec tes potos
+    usage: /team [all|create|leave|info|join]
+  teamchat:
+    description: Change de tchat
+    usage: /teamchat
+    aliases:
+      - chatteam
