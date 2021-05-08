@@ -12,7 +12,6 @@ import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -54,20 +53,26 @@ public class ChatEvent implements Listener, ChatComposer {
 	@Override
 	public @NotNull Component composeChat(@NotNull Player player, @NotNull Component component, @NotNull Component component1) {
 		String stringComponent = PlainComponentSerializer.plain().serialize(component1);
+		player.sendMessage(stringComponent);
 		if (stringComponent.contains("[I]")) {
 			ItemStack item = player.getInventory().getItemInMainHand();
 			ItemMeta meta = item.getItemMeta();
-			Component displayName = meta.displayName();
 			Component itemName;
-			if (item.getType() == Material.AIR)
+			TextReplacementConfig textReplacement;
+			if (item.getType().isAir()) {
 				itemName = Component.text("Main de " + player.getName());
-			else if (meta.hasDisplayName() && displayName != null)
-				itemName = displayName;
-			else
-				itemName = item.getI18NDisplayName() != null ? Component.text(item.getI18NDisplayName()) : Component.text("NONE");
-			HoverEvent<HoverEvent.ShowItem> itemComponent = item.asHoverEvent();
-			TextReplacementConfig textReplacement = TextReplacementConfig.builder().match("(I)")
-					.replacement(itemName.color(NamedTextColor.AQUA).hoverEvent(itemComponent)).build();
+				textReplacement = TextReplacementConfig.builder().match("[I]")
+						.replacement(itemName.color(NamedTextColor.AQUA)).build();
+			} else {
+				Component displayName = meta.displayName();
+				if (meta.hasDisplayName() && displayName != null)
+					itemName = displayName;
+				else
+					itemName = item.getI18NDisplayName() != null ? Component.text(item.getI18NDisplayName()) : Component.text("NONE");
+				HoverEvent<HoverEvent.ShowItem> itemComponent = item.asHoverEvent();
+				textReplacement = TextReplacementConfig.builder().match("[I]")
+						.replacement(itemName.color(NamedTextColor.AQUA).hoverEvent(itemComponent)).build();
+			}
 			component1 = component1.replaceText(textReplacement);
 		}
 		if (stringComponent.contains("[C]")) {

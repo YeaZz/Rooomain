@@ -10,10 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TeamManager {
+
+	private final TeamChatManager teamChatManager = new TeamChatManager();
 
 	private final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
 
@@ -43,6 +46,7 @@ public class TeamManager {
 
 	public void leaveTeam(Player player, Team team) {
 		team.removeEntry(player.getName());
+		teamChatManager.setTeamChat(player, false);
 		TextComponent.Builder component = Component.text().color(NamedTextColor.GRAY)
 				.append(Component.text("» ", NamedTextColor.DARK_GRAY),
 				Component.text(player.getName(), NamedTextColor.AQUA),
@@ -65,6 +69,7 @@ public class TeamManager {
 		return team != null;
 	}
 
+	@Nullable
 	public Team teamOfPlayer(Player player) {
 		for (Team team : scoreboard.getTeams())
 			for (String players : team.getEntries())

@@ -54,7 +54,7 @@ public class DeathEvent implements Listener {
 							Component.text(DeathCountManager.maxDeath - deathCount, NamedTextColor.AQUA),
 							Component.text(" vie."), Component.newline(),
 							Component.text("» ", NamedTextColor.DARK_GRAY),
-							Component.text(" Faites plus attention, c'est votre dernière vie.")).build();
+							Component.text("Faites plus attention, c'est votre dernière vie.")).build();
 			player.sendMessage(component);
 		}
 	}
