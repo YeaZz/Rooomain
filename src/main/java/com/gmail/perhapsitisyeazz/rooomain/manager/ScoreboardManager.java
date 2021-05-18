@@ -54,6 +54,6 @@ public class ScoreboardManager {
 				World world = player.getWorld();
 				setLine(board, 11, TimeManager.formattedTimeFromTick(world.getTime()));
 			}
-		}, 0L, 4L);
+		}, 0L, 15L);
 	}
 }

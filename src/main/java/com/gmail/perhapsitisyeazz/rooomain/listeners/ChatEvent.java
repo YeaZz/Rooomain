@@ -53,7 +53,6 @@ public class ChatEvent implements Listener, ChatComposer {
 	@Override
 	public @NotNull Component composeChat(@NotNull Player player, @NotNull Component component, @NotNull Component component1) {
 		String stringComponent = PlainComponentSerializer.plain().serialize(component1);
-		player.sendMessage(stringComponent);
 		if (stringComponent.contains("[I]")) {
 			ItemStack item = player.getInventory().getItemInMainHand();
 			ItemMeta meta = item.getItemMeta();
