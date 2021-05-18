@@ -46,7 +46,7 @@ public class ChatEvent implements Listener, ChatComposer {
 
 	@EventHandler
 	private void playCommandEvent(PlayerCommandPreprocessEvent event) {
-		if (event.getMessage().replaceFirst("/", "").split(" ")[0].equalsIgnoreCase("teammsg"))
+		if (event.getMessage().split(" ")[0].equalsIgnoreCase("/teammsg"))
 			event.setCancelled(true);
 	}
 

@@ -3,6 +3,7 @@ package com.gmail.perhapsitisyeazz.rooomain.listeners;
 import com.gmail.perhapsitisyeazz.rooomain.Rooomain;
 import com.gmail.perhapsitisyeazz.rooomain.manager.DeathCountManager;
 import com.gmail.perhapsitisyeazz.rooomain.manager.DirectionManager;
+import com.gmail.perhapsitisyeazz.rooomain.manager.ScoreboardManager;
 import com.gmail.perhapsitisyeazz.rooomain.manager.TeamChatManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -18,6 +19,7 @@ public class JoinEvent implements Listener {
 
 	private final TeamChatManager teamChatManager = new TeamChatManager();
 	private final DirectionManager directionManager = new DirectionManager();
+	private final ScoreboardManager scoreboardManager = new ScoreboardManager();
 	private final DeathCountManager deathCountManager = new DeathCountManager();
 
 	public Rooomain main;
@@ -28,6 +30,8 @@ public class JoinEvent implements Listener {
 	@EventHandler
 	private void playerJoinEvent(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
+		scoreboardManager.setScoreboard(player);
+		scoreboardManager.updateScoreboard();
 		if (teamChatManager.teamChatIsNotSet(player))
 			teamChatManager.initialize(player);
 		if (deathCountManager.deathCountIsNotSet(player))

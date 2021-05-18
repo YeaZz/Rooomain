@@ -57,8 +57,7 @@ public class DirectionManager {
 	}
 
 	private String arrow(Direction cp1, Direction cp2) {
-		if (cp1 == Direction.NOT_FOUND)
-			return "✘";
+		if (cp1 == Direction.NOT_FOUND) return "✘";
 		else if (cp1 == cp2) return "↑";
 		else if (Direction.isOpposite(cp1, cp2)) return "↓";
 		else if (Direction.isAtRight(cp1, cp2)) return "→";
