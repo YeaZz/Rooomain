@@ -19,7 +19,6 @@ public class JoinEvent implements Listener {
 
 	private final TeamChatManager teamChatManager = new TeamChatManager();
 	private final DirectionManager directionManager = new DirectionManager();
-	private final ScoreboardManager scoreboardManager = new ScoreboardManager();
 	private final DeathCountManager deathCountManager = new DeathCountManager();
 
 	public Rooomain main;
@@ -30,8 +29,10 @@ public class JoinEvent implements Listener {
 	@EventHandler
 	private void playerJoinEvent(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		scoreboardManager.setScoreboard(player);
-		scoreboardManager.updateScoreboard();
+		ScoreboardManager.setScoreboard(player);
+		if (Bukkit.getOnlinePlayers().size() == 1)
+			ScoreboardManager.updateScoreboardTime();
+		ScoreboardManager.updateScoreboardPlayerCounter();
 		if (teamChatManager.teamChatIsNotSet(player))
 			teamChatManager.initialize(player);
 		if (deathCountManager.deathCountIsNotSet(player))

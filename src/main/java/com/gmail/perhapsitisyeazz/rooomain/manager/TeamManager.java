@@ -41,6 +41,7 @@ public class TeamManager {
 				Component.text(" a rejoint la team "),
 				Component.text(team.getName(), team.color()),
 				Component.text(".")).build();
+		ScoreboardManager.updateScoreboardPlayerTeam(player);
 		Utils.sendToAllPlayers(component);
 	}
 
@@ -61,6 +62,7 @@ public class TeamManager {
 					Component.text(" a été supprimé."));
 			team.unregister();
 		}
+		ScoreboardManager.updateScoreboardPlayerTeam(player);
 		Utils.sendToAllPlayers(component.build());
 	}
 

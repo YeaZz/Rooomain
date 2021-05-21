@@ -1,6 +1,7 @@
 package com.gmail.perhapsitisyeazz.rooomain.manager;
 
 import com.gmail.perhapsitisyeazz.rooomain.Rooomain;
+import com.gmail.perhapsitisyeazz.rooomain.utils.Direction;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;

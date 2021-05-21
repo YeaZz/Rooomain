@@ -10,7 +10,7 @@ public class TeamChatManager {
 
 	private final Rooomain instance = Rooomain.getInstance();
 
-	private final NamespacedKey teamChatKey = new NamespacedKey(instance, "teamChat");
+	private final NamespacedKey teamChatKey = new NamespacedKey(instance, "team_chat");
 
 	public void initialize(Player player) {
 		PersistentDataContainer container = player.getPersistentDataContainer();
