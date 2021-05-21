@@ -32,7 +32,7 @@ public class JoinEvent implements Listener {
 		ScoreboardManager.setScoreboard(player);
 		if (Bukkit.getOnlinePlayers().size() == 1)
 			ScoreboardManager.updateScoreboardTime();
-		ScoreboardManager.updateScoreboardPlayerCounter();
+		ScoreboardManager.updateScoreboardOnlineCounter();
 		if (teamChatManager.teamChatIsNotSet(player))
 			teamChatManager.initialize(player);
 		if (deathCountManager.deathCountIsNotSet(player))

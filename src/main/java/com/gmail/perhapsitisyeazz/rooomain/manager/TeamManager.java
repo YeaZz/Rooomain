@@ -30,6 +30,7 @@ public class TeamManager {
 				Component.text(" a créé la team "),
 				Component.text(team.getName(), teamColor),
 				Component.text(".")).build();
+		ScoreboardManager.updateScoreboardPlayerTeam(player);
 		Utils.sendToAllPlayers(component);
 	}
 

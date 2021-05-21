@@ -80,7 +80,7 @@ public class ScoreboardManager {
 		setLine(board, 13, playerTeamLine(player));
 	}
 
-	public static void updateScoreboardPlayerCounter() {
+	public static void updateScoreboardOnlineCounter() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Objective board = player.getScoreboard().getObjective("DidierScoreboard");
 			if (board == null)
