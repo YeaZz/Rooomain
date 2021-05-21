@@ -34,9 +34,9 @@ public class TimeManager {
 
 	public static Component getMCWeather(World world) {
 		TextComponent.Builder weather = Component.text();
-		if (!world.isClearWeather())
-			weather.append(Component.text("\uD83C\uDF27", NamedTextColor.AQUA)); //🌧
 		if (world.hasStorm())
+			weather.append(Component.text("\uD83C\uDF27", NamedTextColor.AQUA)); //🌧
+		if (world.isThundering())
 			weather.append(Component.text("⚡", NamedTextColor.YELLOW));
 		return weather.build();
 	}
