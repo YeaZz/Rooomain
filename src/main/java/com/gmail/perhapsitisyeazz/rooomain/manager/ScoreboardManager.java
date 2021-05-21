@@ -73,12 +73,19 @@ public class ScoreboardManager {
 		board.getScore(Utils.getColString(entries[line - 1])).setScore(line);
 	}
 
+	public static void updateScoreboardPlayerTeam(Player player) {
+		Objective board = player.getScoreboard().getObjective("DidierScoreboard");
+		if (board == null)
+			return;
+		setLine(board, 13, playerTeamLine(player));
+	}
+
 	public static void updateScoreboardPlayerCounter() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Objective board = player.getScoreboard().getObjective("DidierScoreboard");
 			if (board == null)
 				return;
-			setLine(board, 9, onlineCounterLine());
+			setLine(board, 10, onlineCounterLine());
 		}
 	}
 
@@ -92,15 +99,8 @@ public class ScoreboardManager {
 				if (board == null)
 					return;
 				World world = player.getWorld();
-				setLine(board, 10, inGameTimeLine(world.getTime()));
+				setLine(board, 7, inGameTimeLine(world.getTime()));
 			}
 		}, 0L, 15L);
-	}
-
-	public static void updateScoreboardPlayerTeam(Player player) {
-		Objective board = player.getScoreboard().getObjective("DidierScoreboard");
-		if (board == null)
-			return;
-		setLine(board, 13, playerTeamLine(player));
 	}
 }
