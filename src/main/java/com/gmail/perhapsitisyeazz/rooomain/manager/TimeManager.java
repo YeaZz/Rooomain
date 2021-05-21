@@ -1,7 +1,9 @@
 package com.gmail.perhapsitisyeazz.rooomain.manager;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.World;
 
 public class TimeManager {
 
@@ -28,5 +30,14 @@ public class TimeManager {
 		else
 			whichPart = Component.text("☽", NamedTextColor.WHITE);
 		return whichPart;
+	}
+
+	public static Component getMCWeather(World world) {
+		TextComponent.Builder weather = Component.text();
+		if (!world.isClearWeather())
+			weather.append(Component.text("\uD83C\uDF27", NamedTextColor.AQUA)); //🌧
+		if (world.hasStorm())
+			weather.append(Component.text("⚡", NamedTextColor.YELLOW));
+		return weather.build();
 	}
 }

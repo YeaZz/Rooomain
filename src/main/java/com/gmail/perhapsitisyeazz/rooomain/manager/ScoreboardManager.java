@@ -19,7 +19,7 @@ public class ScoreboardManager {
 
 	public static void setScoreboard(Player player) {
 		Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-		Objective board = scoreboard.registerNewObjective("DidierScoreboard", "dummy", Component.text("Survie"));
+		Objective board = scoreboard.registerNewObjective("DidierScoreboard", "dummy", Component.text("Survie", NamedTextColor.AQUA));
 		board.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 		for (int i = 0; i < 15; i++) {
@@ -28,18 +28,18 @@ public class ScoreboardManager {
 		}
 
 		World world = player.getWorld();
-		setLine(board, 15, Component.space());
-		setLine(board, 14, Component.text("» ", NamedTextColor.DARK_GRAY)
+		setLine(board, 1, Component.space());
+		setLine(board, 10, Component.text("» ", NamedTextColor.DARK_GRAY)
 				.append(Component.text("Team", NamedTextColor.GRAY)));
-		setLine(board, 13, playerTeamLine(player));
-		setLine(board, 12, Component.space());
-		setLine(board, 11, Component.text("» ", NamedTextColor.DARK_GRAY)
+		setLine(board, 9, playerTeamLine(player));
+		setLine(board, 8, Component.space());
+		setLine(board, 7, Component.text("» ", NamedTextColor.DARK_GRAY)
 				.append(Component.text("En ligne", NamedTextColor.GRAY)));
-		setLine(board, 10, onlineCounterLine());
-		setLine(board, 9, Component.space());
-		setLine(board, 8, Component.text("» ", NamedTextColor.DARK_GRAY)
+		setLine(board, 6, onlineCounterLine());
+		setLine(board, 5, Component.space());
+		setLine(board, 4, Component.text("» ", NamedTextColor.DARK_GRAY)
 				.append(Component.text("Temps", NamedTextColor.GRAY)));
-		setLine(board, 7, inGameTimeLine(world.getTime()));
+		setLine(board, 3, inGameTimeLine(world));
 		setLine(board, 2, Component.space());
 		setLine(board, 1, Component.text("network-romain.craft.gg", NamedTextColor.GOLD));
 		player.setScoreboard(scoreboard);
@@ -60,12 +60,14 @@ public class ScoreboardManager {
 						Component.text(max, NamedTextColor.GREEN)).build();
 	}
 
-	private static Component inGameTimeLine(long ticks) {
+	private static Component inGameTimeLine(World world) {
 		return Component.text().color(NamedTextColor.GRAY)
 				.append(Component.text(" - ", NamedTextColor.DARK_AQUA),
-						Component.text(TimeManager.formattedTimeFromTick(ticks), NamedTextColor.AQUA),
+						Component.text(TimeManager.formattedTimeFromTick(world.getTime()), NamedTextColor.AQUA),
 						Component.space(),
-						TimeManager.getMCDayPart(ticks)).build();
+						TimeManager.getMCDayPart(world.getTime()),
+						Component.space(),
+						TimeManager.getMCWeather(world)).build();
 	}
 
 	public static void setLine(Objective board, int line, Component content) {
@@ -77,7 +79,7 @@ public class ScoreboardManager {
 		Objective board = player.getScoreboard().getObjective("DidierScoreboard");
 		if (board == null)
 			return;
-		setLine(board, 13, playerTeamLine(player));
+		setLine(board, 9, playerTeamLine(player));
 	}
 
 	public static void updateScoreboardOnlineCounter() {
@@ -85,7 +87,7 @@ public class ScoreboardManager {
 			Objective board = player.getScoreboard().getObjective("DidierScoreboard");
 			if (board == null)
 				return;
-			setLine(board, 10, onlineCounterLine());
+			setLine(board, 6, onlineCounterLine());
 		}
 	}
 
@@ -99,7 +101,7 @@ public class ScoreboardManager {
 				if (board == null)
 					return;
 				World world = player.getWorld();
-				setLine(board, 7, inGameTimeLine(world.getTime()));
+				setLine(board, 3, inGameTimeLine(world));
 			}
 		}, 0L, 15L);
 	}
