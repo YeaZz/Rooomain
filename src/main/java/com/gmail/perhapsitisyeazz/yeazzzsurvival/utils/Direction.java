@@ -1,4 +1,4 @@
-package com.gmail.perhapsitisyeazz.rooomain.utils;
+package com.gmail.perhapsitisyeazz.yeazzzsurvival.utils;
 
 public enum Direction {
 	NORTH,

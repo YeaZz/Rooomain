@@ -1,4 +1,4 @@
-package com.gmail.perhapsitisyeazz.rooomain.manager;
+package com.gmail.perhapsitisyeazz.yeazzzsurvival.manager;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -7,7 +7,7 @@ import org.bukkit.World;
 
 public class TimeManager {
 
-	public static String formattedTimeFromTick(long ticks) {
+	public String formattedTimeFromTick(long ticks) {
 		long newTicks = (ticks + 6000L) * 72L;
 		newTicks = newTicks / 20L;
 		long mm = (newTicks / 60) % 60;
@@ -15,7 +15,7 @@ public class TimeManager {
 		return String.format("%02d:%02d", HH, mm);
 	}
 
-	public static Component getMCDayPart(long tick) {
+	public Component getMCDayPart(long tick) {
 		Component whichPart;
 		if (tick >= 0L && tick < 1000L)
 			whichPart = Component.text().content("☽").color(NamedTextColor.WHITE)
@@ -32,7 +32,7 @@ public class TimeManager {
 		return whichPart;
 	}
 
-	public static Component getMCWeather(World world) {
+	public Component getMCWeather(World world) {
 		TextComponent.Builder weather = Component.text();
 		if (world.hasStorm())
 			weather.append(Component.text("\uD83C\uDF27", NamedTextColor.AQUA)); //🌧

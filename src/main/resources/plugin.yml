@@ -1,13 +1,10 @@
-name: Rooomain
+name: YeazzzSurvival
 version: 1.0.0
-main: com.gmail.perhapsitisyeazz.rooomain.Rooomain
-api-version: '1.15'
-description: 'RRRRRRRRROOOOOOOOOOOOOMMMMMMMMMMMMAAAAAAAAAAIIIIIIIIIIIINNNNNN'
+main: com.gmail.perhapsitisyeazz.yeazzzsurvival.YeazzzSurvival
+api-version: '1.18'
+description: 'Plugin de serveur survie entre potes'
 author: 'YeaZz_'
 commands:
-  deathcount:
-    description: Oui.
-    usage: /deathcount [show|reset] <player>
   team:
     description: Créé ta team avec tes potos
     usage: /team [all|create|leave|info|join]
@@ -16,3 +13,38 @@ commands:
     usage: /teamchat
     aliases:
       - chatteam
+  teammsg:
+    description: Envoie un message à ta team sans changer de mode de tchat
+    usage: /teammsg <message>
+    aliases:
+      - teammessage
+      - tm
+  mode:
+    description: Change de mode
+    usage: /mode (pacifique|agressif)
+  scoreboard:
+    description: Active ou désactive le scoreboard
+    usage: /scoreboard (on|off)
+    aliases:
+      - board
+  broadcast:
+    description: Envoie un message a tout le monde
+    usage: /broadcast <text>
+    aliases:
+      - bc
+  privatemessage:
+    description: Envoie un message privé à un joueur
+    usage: /privatemessage <player> <text>
+    aliases:
+      - pm
+      - whisper
+      - w
+      - tell
+      - message
+      - msg
+      - m
+  reply:
+    description: Réponds a un joueur
+    usage: /reply <text>
+    aliases:
+      - r

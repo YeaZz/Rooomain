@@ -1,25 +1,21 @@
-package com.gmail.perhapsitisyeazz.rooomain.manager;
+package com.gmail.perhapsitisyeazz.yeazzzsurvival.manager;
 
-import com.gmail.perhapsitisyeazz.rooomain.Rooomain;
-import com.gmail.perhapsitisyeazz.rooomain.utils.Direction;
+import com.gmail.perhapsitisyeazz.yeazzzsurvival.YeazzzSurvival;
+import com.gmail.perhapsitisyeazz.yeazzzsurvival.objects.PlayerData;
+import com.gmail.perhapsitisyeazz.yeazzzsurvival.objects.PlayerTeam;
+import com.gmail.perhapsitisyeazz.yeazzzsurvival.utils.Direction;
+import com.gmail.perhapsitisyeazz.yeazzzsurvival.utils.Utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.plain.PlainComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Team;
-
-import java.util.List;
 
 public class DirectionManager {
 
-	private final Rooomain instance = Rooomain.getInstance();
-	private final TeamManager teamManager = new TeamManager();
-	private final DeathCountManager deathCountManager = new DeathCountManager();
-
-	public Direction playerDirection(Player player) {
+	public static Direction playerDirection(Player player) {
 		double yaw = player.getLocation().getYaw();
 		int i = (int) (((yaw+180)+22.5F)%360)/45;
 		if (i >= 0)
@@ -28,36 +24,43 @@ public class DirectionManager {
 			return Direction.NOT_FOUND;
 	}
 
-	public void teamDirection(Player player) {
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(instance, () -> {
+	public static void teamDirection(Player player) {
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(YeazzzSurvival.getInstance(), () -> {
 			if (!player.isOnline())
 				return;
-			Team team = teamManager.teamOfPlayer(player);
+			PlayerData playerData = PlayerDataManager.getPlayerData(player);
+			PlayerTeam team = playerData.getTeam();
 			if (team == null)
 				return;
-			List<Player> playersInTeam = teamManager.onlinePlayersInTeam(team);
 			TextComponent.Builder builder = Component.text();
-			for (Player target : playersInTeam) {
-				if (target != player && deathCountManager.getDeathCount(target) < 2)
-					builder.append(sendTeamDirection(player, target));
+			for (OfflinePlayer target : PlayerTeamManager.getPlayersFromPlayerTeam(team, true)) {
+				Player onlinePlayer = target.getPlayer();
+				if (onlinePlayer != null && !onlinePlayer.getUniqueId().equals(target.getUniqueId()))
+					builder.append(
+							Component.space(),
+							sendTeamDirection(player, onlinePlayer)
+					);
 			}
 			TextComponent component = builder.build();
-			if (!PlainComponentSerializer.plain().serialize(component).equals(""))
+			if (!PlainTextComponentSerializer.plainText().serialize(component).equals(""))
 				player.sendActionBar(component);
 		}, 0L, 20L);
 	}
 
-	private Component sendTeamDirection(Player player, Player target) {
+	private static Component sendTeamDirection(Player player, Player target) {
 		int distance = flatDistance(player, target);
 		Direction playerCP = playerDirection(player),
 				targetCP = cardinalDirection(player, target);
-		return Component.text().color(NamedTextColor.AQUA)
-				.append(Component.text(target.getName(), NamedTextColor.DARK_AQUA),
-						Component.text(" "+(distance > 1 ? distance+" " : "")),
-						Component.text(distance > 1 ? arrow(playerCP, targetCP) : "✔")).build();
+		if (distance > 50)
+			return Component.text().color(Utils.TEXT_COLOR)
+				.append(Component.text(target.getName(), Utils.HYPHEN_COLOR),
+						Component.text(" " + distance + " "),
+						Component.text(arrow(playerCP, targetCP))).build();
+		else
+			return Component.text("");
 	}
 
-	private String arrow(Direction cp1, Direction cp2) {
+	private static String arrow(Direction cp1, Direction cp2) {
 		if (cp1 == Direction.NOT_FOUND) return "✘";
 		else if (cp1 == cp2) return "↑";
 		else if (Direction.isOpposite(cp1, cp2)) return "↓";
@@ -70,7 +73,7 @@ public class DirectionManager {
 		else return "✔";
 	}
 
-	private Direction cardinalDirection(Player player, Player target) {
+	private static Direction cardinalDirection(Player player, Player target) {
 		Location from = player.getLocation(),
 				to = target.getLocation();
 		double dx = from.getX() - to.getX(),
@@ -85,7 +88,7 @@ public class DirectionManager {
 		return xPos ? Direction.SOUTH_WEST : Direction.SOUTH_EAST;
 	}
 
-	public int flatDistance(Player player, Player target) {
+	public static int flatDistance(Player player, Player target) {
 		Location from = player.getLocation(),
 				to = target.getLocation();
 		if (from.getWorld() != to.getWorld())
